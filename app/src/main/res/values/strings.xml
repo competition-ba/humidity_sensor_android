@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SerialTestApplication</string>
+    <string name="click_me">Click Me!</string>
 </resources>
