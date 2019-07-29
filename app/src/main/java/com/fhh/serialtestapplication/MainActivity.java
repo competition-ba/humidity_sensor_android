@@ -23,22 +23,25 @@ public class MainActivity extends AppCompatActivity {
     private static final String ACTION_USB_PERMISSION = "com.fhh.usbdriver.USB_PERMISSION";
     boolean isOpen;
     int retval, totalrecv;
-    private Button abutton;
-    private static Handler handler;
+    private Button abutton,submit;
+    public static Handler handler;
+    private EditText name,pwd;
     readThread rt;
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DriverHolder.driver.CloseDevice();
+        StaticVarHolder.isNFCActivityOpened=false;
+        StaticVarHolder.driver.CloseDevice();
         if(rt!=null)
             rt.interrupt();
-        //串口程序，最好不要保留后台
-        //System.exit(0);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //若buffer没有创建，此处创建buffer
+        if(StaticVarHolder.msg==null)
+            StaticVarHolder.msg = new byte[128];
+        StaticVarHolder.isNFCActivityOpened=true;
         handler = new Handler() {
 
             public void handleMessage(Message msg) {
@@ -51,16 +54,34 @@ public class MainActivity extends AppCompatActivity {
         };
         setContentView(R.layout.activity_main);
         abutton = findViewById(R.id.button);
+        submit = findViewById(R.id.submit);
+        name = findViewById(R.id.editText2);
+        pwd = findViewById(R.id.editText3);
         abutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 trigSerial();
             }
         });
-        DriverHolder.driver = new CH34xUARTDriver(
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i=0;
+                char[] tmp = name.getText().toString().toCharArray();
+                for(int j=0;j<tmp.length;j++)
+                    StaticVarHolder.msg[j] = (byte)tmp[j];
+                i = tmp.length;
+                StaticVarHolder.msg[i] = (byte)0xFE;
+                tmp = pwd.getText().toString().toCharArray();
+                for(int j=1;j<=tmp.length;j++)
+                    StaticVarHolder.msg[i+j] = (byte)tmp[j-1];
+                StaticVarHolder.msglen = i+tmp.length+1;//名称+0xFE+密码
+            }
+        });
+        StaticVarHolder.driver = new CH34xUARTDriver(
                 (UsbManager) getSystemService(Context.USB_SERVICE), this,
                 ACTION_USB_PERMISSION);
-        if (!DriverHolder.driver.UsbFeatureSupported())// 判断系统是否支持USB HOST
+        if (!StaticVarHolder.driver.UsbFeatureSupported())// 判断系统是否支持USB HOST
         {
             Dialog dialog = new AlertDialog.Builder(MainActivity.this)
                     .setTitle("提示")
@@ -81,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void trigSerial(){
         if (!isOpen) {
-            retval = DriverHolder.driver.ResumeUsbList();
+            retval = StaticVarHolder.driver.ResumeUsbList();
             if (retval == -1)// ResumeUsbList方法用于枚举CH34X设备以及打开相关设备
             {
                 Toast.makeText(MainActivity.this, "打开设备失败!",
                         Toast.LENGTH_SHORT).show();
-                DriverHolder.driver.CloseDevice();
+                StaticVarHolder.driver.CloseDevice();
             } else if (retval == 0) {
-                if (!DriverHolder.driver.UartInit()) {//对串口设备进行初始化操作
+                if (!StaticVarHolder.driver.UartInit()) {//对串口设备进行初始化操作
                     Toast.makeText(MainActivity.this, "设备初始化失败!",
                             Toast.LENGTH_SHORT).show();
                     return;
@@ -97,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
                 //openButton.setText("Close");
                 // configButton.setEnabled(true);
                 //writeButton.setEnabled(true);
-                if (!DriverHolder.driver.SetConfig(9600, (byte)8, (byte)1, (byte)0,(byte)0)) {//串口设置失败
+                if (!StaticVarHolder.driver.SetConfig(9600, (byte)8, (byte)1, (byte)0,(byte)0)) {//串口设置失败
                     return;
                 }
                 //发送启动信号
-                if(DriverHolder.driver.WriteData(new byte[]{'O'},1)==0){
+                if(StaticVarHolder.driver.WriteData(new byte[]{'O'},1)==0){
                     Toast.makeText(MainActivity.this, "发送启动信号失败!",
                             Toast.LENGTH_SHORT).show();
                 };
@@ -144,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            DriverHolder.driver.CloseDevice();
+            StaticVarHolder.driver.CloseDevice();
             totalrecv = 0;
         }
     }
@@ -156,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!isOpen) {
                     break;
                 }
-                int length = DriverHolder.driver.ReadData(buffer, buffer.length);
+                int length = StaticVarHolder.driver.ReadData(buffer, buffer.length);
                 if (length > 0) {
 //					String recv = toHexString(buffer, length);
 //					String recv = new String(buffer, 0, length);

@@ -5,7 +5,7 @@
     android:requireDeviceUnlock="true">
 
     <aid-group android:description="@string/card_title" android:category="other">
-        <aid-filter android:name="01020304050607"/><!--“JINGSAI”-->
+        <aid-filter android:name="4A494E47534149"/><!--“JINGSAI”-->
     </aid-group>
 
 </host-apdu-service>

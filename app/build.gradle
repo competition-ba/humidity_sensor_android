@@ -27,4 +27,5 @@ dependencies {
     api files ('libs/CH34xUARTDriver.jar')
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }
