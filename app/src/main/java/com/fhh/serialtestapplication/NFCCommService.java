@@ -17,13 +17,12 @@ public class NFCCommService extends HostApduService {
         }
         Message msg = Message.obtain();
         msg.obj = new String(bytes);
-        MainActivity.handler.sendMessage(msg);
-        Log.e("aaaaa",new String(bytes));
+        NFCActivity.handler.sendMessage(msg);
         if(StaticVarHolder.msglen==0) {
             Toast.makeText(getBaseContext(),"尚未设置SSID/密码，请设置！",Toast.LENGTH_LONG).show();
             StaticVarHolder.msg = new byte[128];
             int currindex=0;
-            for(byte i:new byte[]{0x00,0x4A,0x49,0x4E,0x47,0x53,0x41,0x49})
+            for(byte i:new byte[]{0x00,0x4A,0x49,0x4E,0x47,0x53,0x41,0x49})//0x00+"JINGSAI"
                 StaticVarHolder.msg[currindex++] = i;
             StaticVarHolder.msglen=8;
         }
