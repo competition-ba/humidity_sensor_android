@@ -30,6 +30,18 @@
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nfcssid" />
+    <EditText
+        android:id="@+id/nfcip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/ipaddr"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nfcpwd" />
 
     <Button
         android:id="@+id/nfcsubmit"
@@ -39,7 +51,7 @@
         android:layout_marginTop="48dp"
         android:text="@string/submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nfcpwd" />
+        app:layout_constraintTop_toBottomOf="@+id/nfcip" />
 
     <EditText
         android:id="@+id/nfcguid"
@@ -50,7 +62,7 @@
         android:editable="false"
         android:ems="10"
         android:hint="@string/device_ssid"
-        android:inputType="textPersonName"
+        android:inputType="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nfcsubmit" />
 

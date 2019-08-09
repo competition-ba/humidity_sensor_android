@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class NFCActivity extends AppCompatActivity {
     private Button submitButton;
-    private EditText ssid,password,guid;
+    private EditText ssid,password,guid,ip;
     public static Handler handler;
     @Override
     protected void onDestroy() {
@@ -29,33 +29,45 @@ public class NFCActivity extends AppCompatActivity {
         ssid = findViewById(R.id.nfcssid);
         password = findViewById(R.id.nfcpwd);
         guid = findViewById(R.id.nfcguid);
+        ip = findViewById(R.id.nfcip);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //检测是否为空
-                if(ssid.getText().length()==0||password.getText().length()==0){
+                if(ssid.getText().toString().isEmpty()||password.getText().toString().isEmpty()||ip.getText().toString().isEmpty()){
                     Toast.makeText(NFCActivity.this,"信息填写不完整，请检查！",Toast.LENGTH_LONG).show();
                     return;
                 }
-                //检测是否过长
-                //SSID：1～32,密码：0～63
-                if(ssid.getText().length()>32||password.getText().length()>63){
-                    Toast.makeText(NFCActivity.this,"数据过长，请检查！",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                //开始录入数据
-                int i=0;
+                int i;
                 char[] tmp = ssid.getText().toString().toCharArray();
                 for(int j=0;j<tmp.length;j++)
                     StaticVarHolder.msg[j] = (byte)tmp[j];
                 i = tmp.length;
-                StaticVarHolder.msg[i] = (byte)0xFE;
+                StaticVarHolder.msg[i] = 0x00;
                 tmp = password.getText().toString().toCharArray();
                 for(int j=1;j<=tmp.length;j++)
                     StaticVarHolder.msg[i+j] = (byte)tmp[j-1];
                 StaticVarHolder.msg[i+tmp.length+1]=0x00;
-                StaticVarHolder.msglen = i+tmp.length+2;//名称+0xFE+密码+0x00
-                Toast.makeText(NFCActivity.this,"数据已录入！",Toast.LENGTH_LONG).show();
+                StaticVarHolder.msglen = i+tmp.length+2;//名称+0x00+密码+0x00
+                String[] ipaddr = ip.getText().toString().split("\\.");
+                if(ipaddr.length!=4){
+                    Toast.makeText(NFCActivity.this,R.string.invalid_ip,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                int tmpip;
+                try {
+                    for(int j=0;j<4;j++) {
+                        tmpip = Integer.parseInt(ipaddr[j]);
+                        if (tmpip > 255)
+                            throw new NumberFormatException();
+                        StaticVarHolder.msg[StaticVarHolder.msglen+j] = (byte) tmpip;
+                    }
+                }
+                catch(NumberFormatException ex) {
+                    Toast.makeText(NFCActivity.this,R.string.invalid_ip,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                StaticVarHolder.msglen+=4;
+                Toast.makeText(NFCActivity.this,"配置已保存！",Toast.LENGTH_LONG).show();
             }
         });
         handler = new Handler() {
