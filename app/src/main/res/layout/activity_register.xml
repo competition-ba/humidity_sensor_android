@@ -6,41 +6,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegisterActivity">
+
     <EditText
         android:id="@+id/user_name"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:hint="账号"
+        android:hint="@string/reminder_account"
         android:maxLength="15"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:autofillHints=""
+        android:inputType="" tools:targetApi="o"/>
     <EditText
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:hint="请输入密码"
+        android:hint="@string/reminder_regpwd"
         android:inputType="textPassword"
         android:maxLength="15"
         android:id="@+id/psw"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:autofillHints="" tools:targetApi="o"/>
     <EditText
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:hint="请再次输入密码"
+        android:hint="@string/reminder_regpwd_2nd"
         android:inputType="textPassword"
         android:maxLength="15"
         android:id="@+id/psw_again"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:autofillHints="" tools:targetApi="o"/>
     <Button
         android:id="@+id/button_register"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
         android:text="@string/button_register"
         android:textSize="24sp"

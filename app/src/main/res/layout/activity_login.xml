@@ -12,17 +12,22 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:hint="账号"
-        android:textSize="20sp" />
+        android:hint="@string/reminder_account"
+        android:textSize="20sp"
+        android:inputType=""
+        tools:targetApi="o"
+        android:autofillHints="" />
     <EditText
         android:id="@+id/psw"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:hint="密码"
+        android:hint="@string/reminder_password"
         android:inputType="textPassword"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:targetApi="o"
+        android:autofillHints="" />
     <Button
         android:id="@+id/button_login"
         android:text="@string/button_login"
