@@ -10,6 +10,8 @@ public class NFCCommService extends HostApduService {
     @Override
     public byte[] processCommandApdu(byte[] bytes, Bundle bundle) {
         //GUID中不允许出现符号“O”,可用来判断配置是否完成
+        //TODO:完成MainActivity与NFCActivity。
+        /*
         if(bytes[0]!='O'){
             if(!StaticVarHolder.isNFCActivityOpened) {
                 Intent dialogIntent = new Intent(getBaseContext(),MainActivity.class);
@@ -27,12 +29,12 @@ public class NFCCommService extends HostApduService {
                     StaticVarHolder.msg[currindex++] = i;
                 StaticVarHolder.msglen=8;
             }
+
             return StaticVarHolder.getAvailMsg();
         }
-        else {
+        */
             Toast.makeText(getBaseContext(),"配置完成！",Toast.LENGTH_LONG).show();
             return null;
-        }
     }
 
     @Override

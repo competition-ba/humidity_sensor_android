@@ -1,5 +1,7 @@
 package com.competitionba.humiditysensor;
 
+import cn.wch.ch34xuartdriver.CH34xUARTDriver;
+
 public class StaticVarHolder {
     public static byte[] msg;
     public static int msglen;
