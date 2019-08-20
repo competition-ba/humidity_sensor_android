@@ -5,13 +5,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -39,10 +36,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mName=(EditText)findViewById(R.id.user_name);
-        mPsw=(EditText)findViewById(R.id.psw);
-        mPswAgain=(EditText)findViewById(R.id.psw_again);
-        mButtonRegister=(Button)findViewById(R.id.button_register);
+        mName= findViewById(R.id.user_name);
+        mPsw= findViewById(R.id.psw);
+        mPswAgain= findViewById(R.id.psw_again);
+        mButtonRegister= findViewById(R.id.button_register);
         mButtonReturnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,"两次输入密码不同", Toast.LENGTH_SHORT).show();
             }
         });
-        mButtonReturnLogin=(Button)findViewById(R.id.button_return_login);
+        mButtonReturnLogin= findViewById(R.id.button_return_login);
         mButtonReturnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,16 +73,21 @@ public class RegisterActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Response response = null;
+                Response response;
                 try {
                     response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        mHandler.obtainMessage(1, response.body().string()).sendToTarget();
+                    if(response!=null) {
+                        if (response.isSuccessful()) {
+                            mHandler.obtainMessage(1, response.body().string()).sendToTarget();
 
-                    } else {
-                        throw new IOException("Unexpected code:" + response);
+                        } else {
+                            throw new IOException("Unexpected code:" + response);
+                        }
                     }
-                } catch (IOException e) {
+                    else
+                        throw new IOException("Empty response!");
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }

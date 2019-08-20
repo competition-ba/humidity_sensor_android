@@ -1,9 +1,7 @@
 package com.competitionba.humiditysensor;
 
-import android.content.Intent;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.os.Message;
 import android.widget.Toast;
 
 public class NFCCommService extends HostApduService {

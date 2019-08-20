@@ -17,16 +17,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mName=(EditText)findViewById(R.id.user_name);
-        mPsw=(EditText)findViewById(R.id.psw);
-        mButtonLogin=(Button)findViewById(R.id.button_login);
+        mName= findViewById(R.id.user_name);
+        mPsw= findViewById(R.id.psw);
+        mButtonLogin= findViewById(R.id.button_login);
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        mButtonRegister=(Button)findViewById(R.id.button_register);
+        mButtonRegister= findViewById(R.id.button_register);
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
