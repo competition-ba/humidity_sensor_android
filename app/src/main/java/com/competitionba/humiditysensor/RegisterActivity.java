@@ -33,7 +33,23 @@ public class RegisterActivity extends AppCompatActivity {
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg){
-            Toast.makeText(RegisterActivity.this,"返回信息："+msg.toString(),Toast.LENGTH_SHORT).show();
+            /*注册返回信息：
+              1.注册成功（OK）。
+              2.用户名已经存在(EXISTS)。
+              3.注册失败(其他任何信息)。*/
+            String result = (String)msg.obj;
+            if(result.equals("OK")){
+                Toast.makeText(RegisterActivity.this,R.string.register_done,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                finish();
+            }
+            else if(result.equals("EXISTS")){
+                Toast.makeText(RegisterActivity.this,R.string.username_exists,Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(RegisterActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterActivity.this,R.string.register_failure,Toast.LENGTH_SHORT).show();
+            }
         }
     };
     @Override
@@ -53,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (psw1.equals(psw2)){
                     postRequest(name1,psw1);
                 }else
-                    Toast.makeText(RegisterActivity.this,"两次输入密码不同", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,R.string.invalid_password, Toast.LENGTH_SHORT).show();
             }
         });
         mButtonReturnLogin= findViewById(R.id.button_return_login);
@@ -101,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                         throw new IOException("Empty response!");
                 }
                 catch (IOException e) {
+                    Toast.makeText(getApplicationContext(),R.string.transfer_failure,Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
