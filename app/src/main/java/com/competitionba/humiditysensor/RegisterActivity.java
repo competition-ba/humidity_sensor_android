@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.FormBody;
@@ -30,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg){
+            Toast.makeText(RegisterActivity.this,"返回信息："+msg.toString(),Toast.LENGTH_SHORT).show();
         }
     };
     @Override
@@ -40,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPsw= findViewById(R.id.psw);
         mPswAgain= findViewById(R.id.psw_again);
         mButtonRegister= findViewById(R.id.button_register);
-        mButtonReturnLogin.setOnClickListener(new View.OnClickListener() {
+        mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name1= mName.getText().toString().trim();
@@ -62,12 +66,21 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
     private void postRequest(String name,String password){
+        //将数据转换成为JSON
+        JSONObject data = new JSONObject();
+        try{
+            data.put("username",name);
+            data.put("password",password);
+            data.put("state","register");
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+        }
         RequestBody formBody = new FormBody.Builder()
-                .add("username",name)
-                .add("password",password)
+                .add("users",data.toString())
                 .build();
         final Request request = new Request.Builder()
-                .url("http://**************/login?")
+                .url("http://cloud.fhh200000.com/Arduino")
                 .post(formBody)
                 .build();
         new Thread(new Runnable() {
