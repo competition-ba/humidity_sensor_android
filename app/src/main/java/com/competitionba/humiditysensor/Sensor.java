@@ -1,13 +1,20 @@
 package com.competitionba.humiditysensor;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Sensor {
+    private UUID mId;
     private String wifiname;
     private String wifipsw;
-    private Date mDate;
     private String sensorGUID;
 
+    public Sensor(){
+        mId = UUID.randomUUID();
+    }
+    public UUID getId() {
+        return mId;
+    }
     public String getWifiname() {
         return wifiname;
     }
@@ -22,14 +29,6 @@ public class Sensor {
 
     public void setWifipsw(String wifipsw) {
         this.wifipsw = wifipsw;
-    }
-
-    public Date getDate() {
-        return mDate;
-    }
-
-    public void setDate(Date date) {
-        mDate = date;
     }
 
     public String getSensorGUID() {

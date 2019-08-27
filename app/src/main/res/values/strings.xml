@@ -17,4 +17,7 @@
     <string name="reminder_password">密码</string>
     <string name="reminder_regpwd">请输入密码</string>
     <string name="reminder_regpwd_2nd">请再次输入密码</string>
+    <string name="et_psw">请输入wifi密码</string>
+    <string name="et_name">请输入wifi账号</string>
+    <string name="et_GUID">请输入传感器GUID</string>
 </resources>
