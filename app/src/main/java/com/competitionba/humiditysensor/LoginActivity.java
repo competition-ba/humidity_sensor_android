@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,R.string.invalid_input,Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //组装注册信息
+                //组装登录信息
                 JSONObject data = new JSONObject();
                 try{
                     data.put("user",name1);

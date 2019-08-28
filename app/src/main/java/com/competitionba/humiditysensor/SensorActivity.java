@@ -108,7 +108,7 @@ public class SensorActivity extends AppCompatActivity {
             FileOutputStream fos = new FileOutputStream(storedata);
             JSONObject data = new JSONObject();
             data.put("ssid",mETName.getText().toString());
-            data.put("pwd",mETName.getText().toString());
+            data.put("pwd",mETPsw.getText().toString());
             data.put("ip",mETIP.getText().toString());
             fos.write(data.toString().getBytes());
             fos.close();
