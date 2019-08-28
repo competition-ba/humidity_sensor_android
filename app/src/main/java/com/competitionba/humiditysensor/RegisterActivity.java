@@ -47,8 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this,R.string.username_exists,Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(RegisterActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
-                //Toast.makeText(RegisterActivity.this,R.string.register_failure,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this,R.string.register_failure,Toast.LENGTH_SHORT).show();
             }
         }
     };

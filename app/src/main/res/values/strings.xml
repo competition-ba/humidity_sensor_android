@@ -20,4 +20,8 @@
     <string name="et_psw">请输入wifi密码</string>
     <string name="et_name">请输入wifi账号</string>
     <string name="et_GUID">请输入目标IP地址</string>
+    <string name="invalid_ip">IP地址格式错误，请重试！</string>
+    <string name="configuration_saved">配置已保存！</string>
+    <string name="configuration_read_failure">配置读取失败！</string>
+    <string name="configuration_write_failure">配置写入失败！</string>
 </resources>

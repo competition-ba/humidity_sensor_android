@@ -4,38 +4,31 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Sensor {
-    private UUID mId;
-    private String wifiname;
-    private String wifipsw;
     private String sensorGUID;
+    private double humidity;
+    private String nickname;
+    private String lastUpdateTime;
 
-    public Sensor(){
-        mId = UUID.randomUUID();
+    public Sensor(String GUID,double humidity,String nickname,String lastUpdateTime){
+        super();
+        this.sensorGUID = GUID;
+        this.humidity = humidity;
+        this.nickname = nickname;
+        this.lastUpdateTime = lastUpdateTime;
     }
-    public UUID getId() {
-        return mId;
-    }
-    public String getWifiname() {
-        return wifiname;
-    }
-
-    public void setWifiname(String wifiname) {
-        this.wifiname = wifiname;
-    }
-
-    public String getWifipsw() {
-        return wifipsw;
-    }
-
-    public void setWifipsw(String wifipsw) {
-        this.wifipsw = wifipsw;
-    }
-
     public String getSensorGUID() {
         return sensorGUID;
     }
 
-    public void setSensorGUID(String sensorGUID) {
-        this.sensorGUID = sensorGUID;
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getLastUpdateTime() {
+        return lastUpdateTime;
     }
 }

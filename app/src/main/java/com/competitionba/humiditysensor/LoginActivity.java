@@ -35,14 +35,18 @@ public class LoginActivity extends AppCompatActivity {
               2.登录失败(其他任何信息)。*/
             String result = (String)msg.obj;
             if(!result.equals("OK")){
-                StaticVarHolder.username = null;
                 //Toast.makeText(LoginActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
                 Toast.makeText(LoginActivity.this,R.string.login_failure,Toast.LENGTH_SHORT).show();
 
             }
             else{
                 Toast.makeText(LoginActivity.this,R.string.login_done,Toast.LENGTH_SHORT).show();
-                //TODO:添加“跳转到主界面功能”
+                String username= mName.getText().toString();
+                //TODO:恢复为列表界面
+                Intent mainintent = new Intent(LoginActivity.this,SensorActivity.class);
+                mainintent.putExtra("username",username);
+                startActivity(mainintent);
+                finish();
             }
 
         }
@@ -63,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(name1.length()==0 || psw1.length()==0) {
                     Toast.makeText(LoginActivity.this,R.string.invalid_input,Toast.LENGTH_SHORT).show();
                     return;
-                };
+                }
                 //组装注册信息
                 JSONObject data = new JSONObject();
                 try{
@@ -75,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                     ex.printStackTrace();
                 }
                 //假设用户名正确（不正确时可在后方清空）
-                StaticVarHolder.username = name1;
                 RequestBody formBody = new FormBody.Builder()
                         .add("users",data.toString())
                         .build();
