@@ -26,11 +26,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/et_psw"/>
+
     <TextView
         style="?android:listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="传感器GUID"/>
+        android:text="目标IP地址" />
     <EditText
         android:id="@+id/et_GUID"
         android:layout_width="match_parent"

@@ -19,5 +19,5 @@
     <string name="reminder_regpwd_2nd">请再次输入密码</string>
     <string name="et_psw">请输入wifi密码</string>
     <string name="et_name">请输入wifi账号</string>
-    <string name="et_GUID">请输入传感器GUID</string>
+    <string name="et_GUID">请输入目标IP地址</string>
 </resources>

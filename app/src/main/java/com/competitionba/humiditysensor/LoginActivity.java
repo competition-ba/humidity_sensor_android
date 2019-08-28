@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 //组装注册信息
                 JSONObject data = new JSONObject();
                 try{
-                    data.put("username",name1);
+                    data.put("user",name1);
                     data.put("password",psw1);
                     data.put("state","login");
                 }
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                         .add("users",data.toString())
                         .build();
                 final Request request = new Request.Builder()
-                        .url("http://cloud.fhh200000.com/Arduino")
+                        .url("http://cloud.fhh200000.com/Arduino/Users")
                         .post(formBody)
                         .build();
                 new Thread(new Runnable() {

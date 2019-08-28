@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         //将数据转换成为JSON
         JSONObject data = new JSONObject();
         try{
-            data.put("username",name);
+            data.put("user",name);
             data.put("password",password);
             data.put("state","register");
         }
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .add("users",data.toString())
                 .build();
         final Request request = new Request.Builder()
-                .url("http://cloud.fhh200000.com/Arduino")
+                .url("http://cloud.fhh200000.com/Arduino/Users")
                 .post(formBody)
                 .build();
         new Thread(new Runnable() {
