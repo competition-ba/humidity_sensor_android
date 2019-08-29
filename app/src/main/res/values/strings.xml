@@ -20,8 +20,15 @@
     <string name="et_psw">请输入wifi密码</string>
     <string name="et_name">请输入wifi账号</string>
     <string name="et_GUID">请输入目标IP地址</string>
+    <string name="et_nickname">请输入昵称(可选)</string>
     <string name="invalid_ip">IP地址格式错误，请重试！</string>
     <string name="configuration_saved">配置已保存！</string>
     <string name="configuration_read_failure">配置读取失败！</string>
     <string name="configuration_write_failure">配置写入失败！</string>
+    <string name="hint_guid">当前连接传感器GUID</string>
+    <string name="otg_not_supported">您的手机不支持通过USB配置传感器！</string>
+    <string name="USB_comm_failure">USB串口通信失败！</string>
+    <string name="USB_perm_failure">没有USB通信权限！</string>
+    <string name="sensor_register_done">传感器注册成功</string>
+    <string name="sensor_register_fail">传感器注册失败</string>
 </resources>

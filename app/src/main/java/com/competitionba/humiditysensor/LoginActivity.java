@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                                 throw new IOException("Empty response!");
                         }
                         catch (IOException e) {
-                            Toast.makeText(getApplicationContext(),R.string.transfer_failure,Toast.LENGTH_SHORT).show();
+                            mHandler.obtainMessage(1, "FATAL").sendToTarget();
                             e.printStackTrace();
                         }
                     }

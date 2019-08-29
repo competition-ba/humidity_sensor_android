@@ -21,11 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="WIFI密码"/>
+
     <EditText
         android:id="@+id/et_psw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/et_psw"/>
+        android:hint="@string/et_psw"
+        android:inputType="textPassword" />
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
@@ -37,6 +39,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/et_GUID"/>
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="传感器昵称" />
+    <EditText
+        android:id="@+id/et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/et_nickname"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_connection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_USB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="USB" />
+
+            <RadioButton
+                android:id="@+id/rb_NFC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="NFC" />
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,5 +96,13 @@
             android:layout_weight="1"
             android:text="连接" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/id_GUID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70px"
+        android:hint="@string/hint_guid"
+        android:textSize="16dp" />
 
 </LinearLayout>
