@@ -54,7 +54,6 @@ public class SensorActivity extends AppCompatActivity {
     private int retval=0;
     File storedata;
     String username;
-    RadioButton rb_usb;
     final OkHttpClient client = new OkHttpClient();
     private Handler httphandler = new Handler(){
         @Override
@@ -80,7 +79,6 @@ public class SensorActivity extends AppCompatActivity {
         mButtonCancel=findViewById(R.id.button_cancel);
         mButtonConnect=findViewById(R.id.button_connect);
         guid = findViewById(R.id.id_GUID);
-        rb_usb = findViewById(R.id.rb_USB);
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         //Toast.makeText(SensorActivity.this,username,Toast.LENGTH_SHORT).show();
@@ -120,16 +118,7 @@ public class SensorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 verify();
-                //判断当前用户选择的初始化类型
-                if(rb_usb.isChecked()){
-                    //USB
-                    Toast.makeText(SensorActivity.this,"USB!",Toast.LENGTH_SHORT).show();
-                    trigUSB();
-                }
-                else{
-                    //NFC
-                    Toast.makeText(SensorActivity.this,"NFC!",Toast.LENGTH_SHORT).show();
-                }
+                trigUSB();
             }
         });
         //当监测到GUID的内容变化时，我们就可以向服务器发送注册数据了。

@@ -55,33 +55,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rg_connection"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_USB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="USB" />
-
-            <RadioButton
-                android:id="@+id/rb_NFC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="NFC" />
-        </RadioGroup>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
