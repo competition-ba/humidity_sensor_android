@@ -2,7 +2,10 @@ package com.competitionba.humiditysensor;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class SensorLab {
     private static SensorLab sSensorLab;
@@ -13,7 +16,26 @@ public class SensorLab {
         }
         return sSensorLab;
     }
+    public List<Sensor> getSensors(){
+        return mSensors;
+    }
     private SensorLab(Context context){
-
+        mSensors = new ArrayList<>();
+        //---------------测试
+        for (int i = 0; i < 100; i++) {
+            mSensors.add(new Sensor(UUID.randomUUID().toString(),
+                                    Math.random()*100,
+                                     String.format("传感器#%d",i),
+                                     new Date()));
+        }
+        //---------------------
+    }
+    public Sensor getSensor(String GUID){
+        for (Sensor sensor:mSensors){
+            if (sensor.getSensorGUID().equals(GUID)){
+                return sensor;
+            }
+        }
+        return null;
     }
 }

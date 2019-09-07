@@ -7,9 +7,9 @@ public class Sensor {
     private String sensorGUID;
     private double humidity;
     private String nickname;
-    private String lastUpdateTime;
+    private Date lastUpdateTime;
 
-    public Sensor(String GUID,double humidity,String nickname,String lastUpdateTime){
+    public Sensor(String GUID,double humidity,String nickname,Date lastUpdateTime){
         super();
         this.sensorGUID = GUID;
         this.humidity = humidity;
@@ -28,7 +28,24 @@ public class Sensor {
         return nickname;
     }
 
-    public String getLastUpdateTime() {
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+
+    public void setSensorGUID(String sensorGUID) {
+        this.sensorGUID = sensorGUID;
+    }
+
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }
