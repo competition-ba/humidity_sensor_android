@@ -16,6 +16,9 @@ public class SensorLab {
         }
         return sSensorLab;
     }
+    public void addSensor(Sensor s) {
+        mSensors.add(s);
+    }
     public List<Sensor> getSensors(){
         return mSensors;
     }
@@ -24,7 +27,7 @@ public class SensorLab {
         //---------------测试
         for (int i = 0; i < 100; i++) {
             mSensors.add(new Sensor(UUID.randomUUID().toString(),
-                                    Math.random()*100,
+                                    Math.random()*5,
                                      String.format("传感器#%d",i),
                                      new Date()));
         }
