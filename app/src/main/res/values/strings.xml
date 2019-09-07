@@ -31,4 +31,5 @@
     <string name="USB_perm_failure">没有USB通信权限！</string>
     <string name="sensor_register_done">传感器注册成功</string>
     <string name="sensor_register_fail">传感器注册失败</string>
+    <string name="new_sensor">新传感器</string>
 </resources>

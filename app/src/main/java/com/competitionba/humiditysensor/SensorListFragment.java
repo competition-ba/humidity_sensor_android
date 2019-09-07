@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,6 +22,12 @@ import java.util.List;
 public class SensorListFragment extends Fragment {
     private RecyclerView mSensorRecyclerView;
     private SensorAdapter mAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +43,21 @@ public class SensorListFragment extends Fragment {
         mAdapter = new SensorAdapter(sensors);
         mSensorRecyclerView.setAdapter(mAdapter);
     }
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_sensor_list, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.new_sensor:
+                startActivity(new Intent(getActivity(),SensorActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private class SensorHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
         private TextView mLastUpdateTimeTextView;
