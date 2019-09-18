@@ -25,7 +25,7 @@ public class SensorLab {
     private SensorLab(Context context){
         mSensors = new ArrayList<>();
         //---------------测试
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 5; i++) {
             mSensors.add(new Sensor(UUID.randomUUID().toString(),
                                     Math.random()*5,
                                      String.format("传感器#%d",i),

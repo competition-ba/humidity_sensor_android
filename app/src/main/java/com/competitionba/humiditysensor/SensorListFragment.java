@@ -1,9 +1,12 @@
 package com.competitionba.humiditysensor;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -22,6 +25,8 @@ import java.util.List;
 public class SensorListFragment extends Fragment {
     private RecyclerView mSensorRecyclerView;
     private SensorAdapter mAdapter;
+    private AlertDialog alert = null;
+    private AlertDialog.Builder builder = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +84,14 @@ public class SensorListFragment extends Fragment {
         }
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(getActivity(), SensorActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity(), SensorActivity.class);
+//            startActivity(intent);
+            builder = new AlertDialog.Builder(getContext());
+            alert = builder.setTitle("详细信息：")
+                    .setMessage("传感器昵称：")
+                    .setPositiveButton("确定",null)
+                    .create();
+            alert.show();
         }
     }
 
