@@ -1,15 +1,12 @@
 package com.competitionba.humiditysensor;
-
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,9 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
 public class SensorListFragment extends Fragment {
@@ -37,7 +32,7 @@ public class SensorListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor_list, container, false);
-        mSensorRecyclerView = (RecyclerView) view.findViewById(R.id.sensor_recycler_view);
+        mSensorRecyclerView = view.findViewById(R.id.sensor_recycler_view);
         mSensorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
         return view;
@@ -63,35 +58,15 @@ public class SensorListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private class SensorHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class SensorHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
         private TextView mLastUpdateTimeTextView;
-        private Sensor mSensor;
-        public SensorHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_sensor, parent, false));
-            itemView.setOnClickListener(this);
-            mNameTextView=(TextView)itemView.findViewById(R.id.sensor_title);
-            mLastUpdateTimeTextView=(TextView)itemView.findViewById(R.id.sensor_lastuplatedate);
-        }
-        public void bind(Sensor sensor){
-            mSensor = sensor;
-            mNameTextView.setText(mSensor.getNickname());
-            Date date = sensor.getLastUpdateTime();
-            CharSequence cs = "EEEE, MMMM dd, yyyy"; //星期，月份 几号，几年   例如：星期一，十一月 5， 2018
-            CharSequence re = DateFormat.format(cs,date);
-            String dateFormat = re.toString();
-            mLastUpdateTimeTextView.setText(dateFormat);
-        }
-        @Override
-        public void onClick(View view) {
-//            Intent intent = new Intent(getActivity(), SensorActivity.class);
-//            startActivity(intent);
-            builder = new AlertDialog.Builder(getContext());
-            alert = builder.setTitle("详细信息：")
-                    .setMessage("传感器昵称：")
-                    .setPositiveButton("确定",null)
-                    .create();
-            alert.show();
+        private ConstraintLayout mOutLayout;
+        public SensorHolder(@NonNull View itemView) {
+            super(itemView);
+            mNameTextView=itemView.findViewById(R.id.sensor_title);
+            mLastUpdateTimeTextView=itemView.findViewById(R.id.sensor_lastuplatedate);
+            mOutLayout =  itemView.findViewById(R.id.out);
         }
     }
 
@@ -102,13 +77,27 @@ public class SensorListFragment extends Fragment {
         }
         @Override
         public SensorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new SensorHolder(layoutInflater, parent);
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View view = inflater.inflate(R.layout.list_item_sensor, parent, false);
+            final SensorHolder holder=new SensorHolder(view);
+            return holder;
         }
         @Override
         public void onBindViewHolder(@NonNull SensorHolder holder, int position) {
-            Sensor sensor = mSensors.get(position);
-            holder.bind(sensor);
+            final Sensor sensor = mSensors.get(position);
+            holder.mNameTextView.setText(sensor.getNickname());
+            holder.mLastUpdateTimeTextView.setText(sensor.getLastUpdateTime().toString());
+            holder.mOutLayout.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   builder = new AlertDialog.Builder(getContext());
+                   alert = builder.setTitle("详细信息：")
+                           .setMessage("传感器昵称："+sensor.getNickname()+"\n传感器GUID"+sensor.getSensorGUID()+"\n湿度"+sensor.getHumidity())
+                           .setPositiveButton("确定",null)
+                           .create();
+                   alert.show();
+                }
+            });
         }
         @Override
         public int getItemCount() {
