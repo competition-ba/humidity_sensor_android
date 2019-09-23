@@ -63,8 +63,8 @@ public class SensorActivity extends AppCompatActivity {
                 Toast.makeText(SensorActivity.this,R.string.sensor_register_done,Toast.LENGTH_SHORT).show();
             }
             else {
-                //Toast.makeText(RegisterActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
-                Toast.makeText(SensorActivity.this,R.string.sensor_register_fail,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SensorActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SensorActivity.this,R.string.sensor_register_fail,Toast.LENGTH_SHORT).show();
             }
         }
     };

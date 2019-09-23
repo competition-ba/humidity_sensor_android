@@ -1,5 +1,6 @@
 package com.competitionba.humiditysensor;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,R.string.login_done,Toast.LENGTH_SHORT).show();
                 String username= mName.getText().toString();
                 //TODO:恢复为列表界面
-                Intent mainintent = new Intent(LoginActivity.this,SensorActivity.class);
+                Intent mainintent = new Intent(LoginActivity.this,SensorListActivity.class);
                 mainintent.putExtra("username",username);
                 startActivity(mainintent);
                 finish();
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     data.put("user",name1);
                     data.put("password",psw1);
                     data.put("state","login");
+                    Toast.makeText(getApplicationContext(),data.toString(),Toast.LENGTH_LONG).show();
                 }
                 catch (JSONException ex) {
                     ex.printStackTrace();

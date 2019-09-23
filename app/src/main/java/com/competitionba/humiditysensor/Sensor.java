@@ -1,15 +1,12 @@
 package com.competitionba.humiditysensor;
 
-import java.util.Date;
-import java.util.UUID;
-
 public class Sensor {
     private String sensorGUID;
     private double humidity;
     private String nickname;
-    private Date lastUpdateTime;
+    private String lastUpdateTime;
 
-    public Sensor(String GUID,double humidity,String nickname,Date lastUpdateTime){
+    public Sensor(String GUID,double humidity,String nickname,String lastUpdateTime){
         super();
         this.sensorGUID = GUID;
         this.humidity = humidity;
@@ -28,7 +25,7 @@ public class Sensor {
         return nickname;
     }
 
-    public Date getLastUpdateTime() {
+    public String getLastUpdateTime() {
         return lastUpdateTime;
     }
 
@@ -45,7 +42,7 @@ public class Sensor {
         this.nickname = nickname;
     }
 
-    public void setLastUpdateTime(Date lastUpdateTime) {
+    public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 }

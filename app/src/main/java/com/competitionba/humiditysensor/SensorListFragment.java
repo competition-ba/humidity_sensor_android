@@ -1,6 +1,8 @@
 package com.competitionba.humiditysensor;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -14,15 +16,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SensorListFragment extends Fragment {
     private RecyclerView mSensorRecyclerView;
     private SensorAdapter mAdapter;
     private AlertDialog alert = null;
     private AlertDialog.Builder builder = null;
+    static String username;
+    final OkHttpClient client = new OkHttpClient();
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            /*登录返回信息：
+              1.登录成功（OK）。
+              2.登录失败(其他任何信息)。*/
+            String result = (String)msg.obj;
+            result = "[{\"data\":28,\"nickname\":\"no3\",\"x\":2,\"senNo\":\"41F85FD482E2665971273F4DE6D4F52D\",\"y\":3,\"time\":\"2000-01-01 12:00:00\"}]";
+            Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+            //拆分
+            SensorLab sensorLab = SensorLab.get(getActivity());
+            sensorLab.updateSensor(result);
+            //更新界面
+            updateUI();
 
+        }
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +65,45 @@ public class SensorListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sensor_list, container, false);
         mSensorRecyclerView = view.findViewById(R.id.sensor_recycler_view);
         mSensorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //获取传感器信息
+        JSONObject data = new JSONObject();
+        try{
+            data.put("user",username);
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        RequestBody formBody = new FormBody.Builder()
+                .add("users",data.toString())
+                .build();
+        final Request request = new Request.Builder()
+                .url("http://cloud.fhh200000.com/Arduino/USN")
+                .post(formBody)
+                .build();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response;
+                try {
+                    response = client.newCall(request).execute();
+                    if(response!=null) {
+                        if (response.isSuccessful()) {
+                            mHandler.obtainMessage(1, response.body().string()).sendToTarget();
+                        } else {
+                            throw new IOException("Unexpected code:" + response);
+                        }
+                    }
+                    else
+                        throw new IOException("Empty response!");
+                }
+                catch (IOException e) {
+                    mHandler.obtainMessage(1, "FATAL").sendToTarget();
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         updateUI();
+        Toast.makeText(getContext(),username,Toast.LENGTH_SHORT).show();
         return view;
     }
     private void updateUI(){
@@ -51,8 +120,11 @@ public class SensorListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.new_sensor:
-                startActivity(new Intent(getActivity(),SensorActivity.class));
+            case R.id.new_sensor:{
+                Intent intent = new Intent(getActivity(),SensorActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+            }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -92,7 +164,7 @@ public class SensorListFragment extends Fragment {
                public void onClick(View v) {
                    builder = new AlertDialog.Builder(getContext());
                    alert = builder.setTitle("详细信息：")
-                           .setMessage("传感器昵称："+sensor.getNickname()+"\n传感器GUID"+sensor.getSensorGUID()+"\n湿度"+sensor.getHumidity())
+                           .setMessage("传感器昵称："+sensor.getNickname()+"\n传感器GUID:"+sensor.getSensorGUID()+"\n湿度:"+sensor.getHumidity()+"\n最后更新时间："+sensor.getLastUpdateTime())
                            .setPositiveButton("确定",null)
                            .create();
                    alert.show();
