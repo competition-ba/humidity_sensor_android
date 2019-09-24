@@ -29,14 +29,12 @@ public class SensorLab {
     }
     private SensorLab(Context context){
         mSensors = new ArrayList<>();
-        //---------------测试
-        //for (int i = 0; i < 5; i++) {
-        //    mSensors.add(new Sensor(UUID.randomUUID().toString(),
-        //                            Math.random()*5,
-        //                            String.format("传感器#%d",i),
-         //                            new Date()));
-        //}
-        //---------------------
+        for (int i = 0; i < 5; i++) {
+            mSensors.add(new Sensor(UUID.randomUUID().toString(),
+                                    Math.random()*5,
+                                    String.format("传感器#%d",i),
+                                     "123456", (int)(Math.random()*768)));
+        }
     }
     public Sensor getSensor(String GUID){
         for (Sensor sensor:mSensors){
@@ -58,7 +56,8 @@ public class SensorLab {
                         value.getString("senNo"),
                         Double.valueOf(value.getString("data")),
                         value.getString("nickname"),
-                        value.getString("time")
+                        value.getString("time"),
+                        Integer.valueOf(value.getString("NH3"))
                 ));
             }
         }

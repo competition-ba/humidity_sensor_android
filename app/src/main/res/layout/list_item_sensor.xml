@@ -17,7 +17,7 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/sensor_lastuplatedate"
-        app:layout_constraintEnd_toStartOf="@+id/sensor_collect"
+        app:layout_constraintEnd_toStartOf="@+id/nh3_needclear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"  />
@@ -31,20 +31,19 @@
         android:layout_marginEnd="8dp"
         android:text="最后更新时间"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sensor_collect"
+        app:layout_constraintEnd_toStartOf="@+id/nh3_needclear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sensor_title" />
 
     <ImageView
-        android:id="@+id/sensor_collect"
+        android:id="@+id/nh3_needclear"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_solved" />
+        app:srcCompat="@drawable/ic_menu_clear" />
 </android.support.constraint.ConstraintLayout>

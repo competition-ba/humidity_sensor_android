@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +41,9 @@ public class SensorListFragment extends Fragment {
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg){
-            /*登录返回信息：
-              1.登录成功（OK）。
-              2.登录失败(其他任何信息)。*/
             String result = (String)msg.obj;
-            result = "[{\"data\":28,\"nickname\":\"no3\",\"x\":2,\"senNo\":\"41F85FD482E2665971273F4DE6D4F52D\",\"y\":3,\"time\":\"2000-01-01 12:00:00\"}]";
-            Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+            //result = "[{\"data\":28,\"nickname\":\"no3\",\"x\":2,\"senNo\":\"41F85FD482E2665971273F4DE6D4F52D\",\"y\":3,\"time\":\"2000-01-01 12:00:00\"}]";
+            //Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
             //拆分
             SensorLab sensorLab = SensorLab.get(getActivity());
             sensorLab.updateSensor(result);
@@ -74,7 +72,7 @@ public class SensorListFragment extends Fragment {
             ex.printStackTrace();
         }
         RequestBody formBody = new FormBody.Builder()
-                .add("users",data.toString())
+                .add("USN",data.toString())
                 .build();
         final Request request = new Request.Builder()
                 .url("http://cloud.fhh200000.com/Arduino/USN")
@@ -103,7 +101,6 @@ public class SensorListFragment extends Fragment {
             }
         }).start();
         updateUI();
-        Toast.makeText(getContext(),username,Toast.LENGTH_SHORT).show();
         return view;
     }
     private void updateUI(){
@@ -133,11 +130,13 @@ public class SensorListFragment extends Fragment {
     private class SensorHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
         private TextView mLastUpdateTimeTextView;
+        private ImageView mClearImageView;
         private ConstraintLayout mOutLayout;
         public SensorHolder(@NonNull View itemView) {
             super(itemView);
             mNameTextView=itemView.findViewById(R.id.sensor_title);
             mLastUpdateTimeTextView=itemView.findViewById(R.id.sensor_lastuplatedate);
+            mClearImageView=itemView.findViewById(R.id.nh3_needclear);
             mOutLayout =  itemView.findViewById(R.id.out);
         }
     }
@@ -164,12 +163,19 @@ public class SensorListFragment extends Fragment {
                public void onClick(View v) {
                    builder = new AlertDialog.Builder(getContext());
                    alert = builder.setTitle("详细信息：")
-                           .setMessage("传感器昵称："+sensor.getNickname()+"\n传感器GUID:"+sensor.getSensorGUID()+"\n湿度:"+sensor.getHumidity()+"\n最后更新时间："+sensor.getLastUpdateTime())
+                           .setMessage("传感器昵称："+sensor.getNickname()+
+                                   "\n传感器GUID:"+sensor.getSensorGUID()+
+                                   "\n湿度:"+sensor.getHumidity()+
+                                   "\n最后更新时间："+sensor.getLastUpdateTime()+
+                                   "\n氨气相对浓度："+sensor.getNH3())
                            .setPositiveButton("确定",null)
                            .create();
                    alert.show();
                 }
             });
+            if (sensor.getNH3()<512){
+                holder.mClearImageView.setVisibility(View.INVISIBLE);
+            }
         }
         @Override
         public int getItemCount() {
