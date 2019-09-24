@@ -61,6 +61,7 @@ public class SensorActivity extends AppCompatActivity {
             String result = (String)msg.obj;
             if(result.equals("OK")){
                 Toast.makeText(SensorActivity.this,R.string.sensor_register_done,Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
             }
             else {
                 Toast.makeText(SensorActivity.this,"返回值："+result,Toast.LENGTH_SHORT).show();
@@ -119,6 +120,7 @@ public class SensorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 verify();
                 trigUSB();
+
             }
         });
         //当监测到GUID的内容变化时，我们就可以向服务器发送注册数据了。

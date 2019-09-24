@@ -1,4 +1,5 @@
 package com.competitionba.humiditysensor;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,6 +65,11 @@ public class SensorListFragment extends Fragment {
         mSensorRecyclerView = view.findViewById(R.id.sensor_recycler_view);
         mSensorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //获取传感器信息
+        updateLab();
+        updateUI();
+        return view;
+    }
+    private void updateLab(){
         JSONObject data = new JSONObject();
         try{
             data.put("user",username);
@@ -100,8 +106,6 @@ public class SensorListFragment extends Fragment {
                 }
             }
         }).start();
-        updateUI();
-        return view;
     }
     private void updateUI(){
         SensorLab sensorLab = SensorLab.get(getActivity());
@@ -120,13 +124,23 @@ public class SensorListFragment extends Fragment {
             case R.id.new_sensor:{
                 Intent intent = new Intent(getActivity(),SensorActivity.class);
                 intent.putExtra("username",username);
-                startActivity(intent);
+                startActivityForResult(intent,666);
             }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == 666) {
+            updateLab();
+        }
+    }
+
     private class SensorHolder extends RecyclerView.ViewHolder {
         private TextView mNameTextView;
         private TextView mLastUpdateTimeTextView;
